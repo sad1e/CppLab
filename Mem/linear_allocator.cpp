@@ -5,31 +5,24 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "common.h"
+#include "mem_common.h"
 #include "io.h"
 #include "utils.h"
 
 namespace fcpp {
 
 LinearAllocator::LinearAllocator(std::size_t total_size)
-    : Allocator(total_size) {}
+    : Allocator(total_size), offset_(0) {
+  start_ptr_ = static_cast<char*>(::operator new(total_size));
+}
 
 LinearAllocator::~LinearAllocator() {
-  free(start_ptr_);
+  ::operator delete(start_ptr_);
   start_ptr_ = nullptr;
 }
 
-void LinearAllocator::Init() {
-  if (start_ptr_ != nullptr) {
-    free(start_ptr_);
-  }
-
-  start_ptr_ = malloc(total_size_);
-  offset_ = 0u;
-}
-
-void* LinearAllocator::Allocate(const std::size_t size,
-                                const std::size_t alignment) {
+void* LinearAllocator::alloc(const std::size_t size,
+                             const std::size_t alignment) {
   size_t next_addr = 0u;
   size_t padding = 0u;
 
@@ -40,15 +33,13 @@ void* LinearAllocator::Allocate(const std::size_t size,
   }
 
   if (next_addr + size > total_size_) {
-    std::cerr << "out of memory range." << io::endl;
+    std::cerr << "LinearAllocator: alloc failed, not enough memory.\n";
     return nullptr;
   }
 
   return (void*)next_addr;
 }
 
-void LinearAllocator::Free(void* ptr) {}
-
-void LinearAllocator::Reset() {}
+void LinearAllocator::dealloc(void* ptr) {}
 
 }  // namespace fcpp

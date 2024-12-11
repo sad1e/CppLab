@@ -7,9 +7,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
 
-project(CppLearner  VERSION 0.0.1
-                    DESCRIPTION "CppLearner"
-                    LANGUAGES CXX)
+project(CppLearner VERSION 0.0.1
+                   DESCRIPTION "CppLearner"
+                   LANGUAGES CXX)
 
+find_package(benchmark CONFIG REQUIRED)
 
 add_subdirectory(Mem)

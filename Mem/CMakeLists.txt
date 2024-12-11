@@ -5,8 +5,7 @@ set(TARGET Mem)
 set(MEM_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(MEM_SOURCES
-
-    common.h
+    mem_common.h
     allocator.h
     benchmark.cpp
     benchmark.h
@@ -19,10 +18,11 @@ set(MEM_SOURCES
     membase.h
     membase.cpp
 
-    mem.cpp
+    mem_bench.cpp
 )
 
 add_executable(${TARGET} ${MEM_SOURCES})
 if (MSVC)
     target_compile_definitions(${TARGET} PUBLIC UNICODE _UNICODE)
 endif ()
+target_link_libraries(${TARGET} PRIVATE benchmark::benchmark benchmark::benchmark_main)

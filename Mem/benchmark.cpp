@@ -7,14 +7,13 @@
 
 #include "io.h"
 
-
 namespace fcpp {
 
 void Benchmark::SingleAllocation(Allocator* allocator, const std::size_t size,
                                  const std::size_t alignment) {
-  std::cout << "BENCHMARK: SINGLE ALLOCATION" << io::endl;
-  std::cout << "\tSize:       " << size << io::endl;
-  std::cout << "\tAlignment:  " << alignment << io::endl;
+  // std::cout << "BENCHMARK: SINGLE ALLOCATION" << io::endl;
+  // std::cout << "\tSize:       " << size << io::endl;
+  // std::cout << "\tAlignment:  " << alignment << io::endl;
 
   StartRound();
 
@@ -28,16 +27,16 @@ void Benchmark::SingleAllocation(Allocator* allocator, const std::size_t size,
 
   FinishRound();
 
-  BenchmarkResults results = BuildResults(
-      OperationCount, std::move(TimeElapsed), allocator->GetPeak());
-  PrintBenchmarkResults(results);
+  // BenchmarkResults results = BuildResults(
+  //     OperationCount, std::move(TimeElapsed), allocator->GetPeak());
+  // PrintBenchmarkResults(results);
 }
 
 void Benchmark::SingleFree(Allocator* allocator, const std::size_t size,
                            const std::size_t alignment) {
-  std::cout << "BENCHMARK: SINGLE FREE" << io::endl;
-  std::cout << "\tSize:        " << size << io::endl;
-  std::cout << "\tAlignment:   " << alignment << io::endl;
+  // std::cout << "BENCHMARK: SINGLE FREE" << io::endl;
+  // std::cout << "\tSize:        " << size << io::endl;
+  // std::cout << "\tAlignment:   " << alignment << io::endl;
 
   void* addresses[OPERATIONS];
 
@@ -57,9 +56,9 @@ void Benchmark::SingleFree(Allocator* allocator, const std::size_t size,
 
   FinishRound();
 
-  BenchmarkResults results = BuildResults(
-      OperationCount, std::move(TimeElapsed), allocator->GetPeak());
-  PrintBenchmarkResults(results);
+  // BenchmarkResults results = BuildResults(
+  //     OperationCount, std::move(TimeElapsed), allocator->GetPeak());
+  // PrintBenchmarkResults(results);
 }
 
 void Benchmark::MultipleAllocation(
@@ -87,9 +86,9 @@ void Benchmark::MultipleFree(Allocator* allocator,
 void Benchmark::RandomAllocation(
     Allocator* allocator, const std::vector<std::size_t>& allocation_sizes,
     const std::vector<std::size_t>& alignments) {
-  std::srand(1);
+  // std::cout << "BENCHMARK: RANDOM ALLOCATION" << io::endl;
 
-  std::cout << "BENCHMARK: RANDOM ALLOCATION" << io::endl;
+  std::srand(1);
 
   StartRound();
 
@@ -108,17 +107,17 @@ void Benchmark::RandomAllocation(
 
   FinishRound();
 
-  BenchmarkResults results = BuildResults(
-      OperationCount, std::move(TimeElapsed), allocator->GetPeak());
-  PrintBenchmarkResults(results);
+  // BenchmarkResults results = BuildResults(
+  //     OperationCount, std::move(TimeElapsed), allocator->GetPeak());
+  // PrintBenchmarkResults(results);
 }
 
 void Benchmark::RandomFree(Allocator* allocator,
                            const std::vector<std::size_t>& allocation_sizes,
                            const std::vector<std::size_t>& alignments) {
-  std::srand(1);
+  // std::cout << "BENCHMARK: RANDOM FREE" << io::endl;
 
-  std::cout << "BENCHMARK: RANDOM FREE" << io::endl;
+  std::srand(1);
 
   StartRound();
 
@@ -140,9 +139,9 @@ void Benchmark::RandomFree(Allocator* allocator,
 
   FinishRound();
 
-  BenchmarkResults results = BuildResults(
-      OperationCount, std::move(TimeElapsed), allocator->GetPeak());
-  PrintBenchmarkResults(results);
+  // BenchmarkResults results = BuildResults(
+  //     OperationCount, std::move(TimeElapsed), allocator->GetPeak());
+  // PrintBenchmarkResults(results);
 }
 
 void Benchmark::PrintBenchmarkResults(const BenchmarkResults& results) const {
