@@ -8,15 +8,10 @@ CAllocator::CAllocator() : Allocator(0) {}
 
 CAllocator::~CAllocator() {}
 
-void* CAllocator::Allocate(const std::size_t size,
-                           const std::size_t alignment) {
+void* CAllocator::alloc(const std::size_t size, const std::size_t alignment) {
   return std::malloc(size);
 }
 
-void CAllocator::Free(void* p) { std::free(p); }
-
-void CAllocator::Init() {
-  // do nothing.
-}
+void CAllocator::dealloc(void* p) { std::free(p); }
 
 }  // namespace fcpp

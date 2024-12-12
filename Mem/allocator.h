@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Common/core.h"
 #include <cstddef>
 
 namespace fcpp {
@@ -10,7 +11,7 @@ class Allocator {
   std::size_t peak_;
 
  public:
-  Allocator(std::size_t total_size)
+  explicit Allocator(std::size_t total_size)
       : total_size_(total_size), used_(0), peak_(0) {}
 
   virtual ~Allocator() { total_size_ = 0; }

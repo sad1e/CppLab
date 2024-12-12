@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstdint>
+#include <cassert>
+
 namespace fcpp {
 
 template <typename T>
@@ -31,5 +34,8 @@ template <typename T>
 inline bool IsPowerOfTwo(T v) {
   return (v & (v - 1)) == 0;
 }
+
+/** @note: same as AlignUp. */
+uintptr_t AlignForward(uintptr_t ptr, size_t alignment);
 
 }  // namespace fcpp

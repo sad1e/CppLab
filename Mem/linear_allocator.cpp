@@ -12,34 +12,44 @@
 namespace fcpp {
 
 LinearAllocator::LinearAllocator(std::size_t total_size)
-    : Allocator(total_size), offset_(0) {
+    : Allocator(total_size), prev_offset_(0u), offset_(0u) {
+  // get the start address of current allocator.
   start_ptr_ = static_cast<char*>(::operator new(total_size));
+
+  std::cout << "[LinearAllocator]: ctor, alloc space once." << io::endl;
 }
 
 LinearAllocator::~LinearAllocator() {
+  // free all spaces and set `start_ptr_` to null.
   ::operator delete(start_ptr_);
   start_ptr_ = nullptr;
+
+  std::cout << "[LinearAllocator]: dtor, dealloc space." << io::endl;
 }
 
 void* LinearAllocator::alloc(const std::size_t size,
                              const std::size_t alignment) {
-  size_t next_addr = 0u;
-  size_t padding = 0u;
+  std::size_t start_addr = (std::size_t)start_ptr_;
+  std::size_t curr_ptr = start_addr + offset_;
+  std::size_t new_offset = AlignUp(curr_ptr, alignment) - start_addr;
 
-  const size_t current_addr = (size_t)start_ptr_ + offset_;
-  if (alignment != 0 && (offset_ % alignment != 0)) {
-    size_t next_aligned_addr = AlignUp(current_addr, alignment);
-    padding = next_aligned_addr - current_addr;
-  }
+  if (new_offset + size <= total_size_) {
+    void* p = (void*)((std::size_t)start_ptr_ + new_offset);
+    prev_offset_ = offset_;
+    offset_ = new_offset;
 
-  if (next_addr + size > total_size_) {
+    memset(p, 0, size);
+
+    return p;
+  } else {
     std::cerr << "LinearAllocator: alloc failed, not enough memory.\n";
-    return nullptr;
   }
 
-  return (void*)next_addr;
+  return nullptr;
 }
 
-void LinearAllocator::dealloc(void* ptr) {}
+void LinearAllocator::dealloc(void* ptr) {
+  // do nothing.
+}
 
 }  // namespace fcpp

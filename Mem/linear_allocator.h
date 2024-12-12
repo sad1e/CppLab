@@ -4,13 +4,24 @@
 
 namespace fcpp {
 
+/**
+ * The linear allocator is simple enough, the user is not allowed to free
+ * certain blocks of memory. The memory is usually free all at once.
+ *
+ * @note: the linear allocator is obey the RAII rules, but does it really need
+ * RAII?
+ */
 class LinearAllocator : public Allocator {
  protected:
-  void* start_ptr_{nullptr};
-  std::size_t offset_{0u};
+  void* start_ptr_;
+  std::size_t prev_offset_;
+  std::size_t offset_;
 
  public:
-  LinearAllocator(std::size_t total_size);
+  LinearAllocator() = delete;
+  explicit LinearAllocator(std::size_t total_size);
+
+  DISABLE_CPP_COPY_AND_MOVE(LinearAllocator);
 
   virtual ~LinearAllocator();
 

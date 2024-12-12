@@ -2,21 +2,19 @@
 
 #include <iostream>
 
-#include "benchmark.h"
 #include "callocator.h"
 #include "io.h"
 #include "mem_common.h"
 
 static void BM_MultipleAllocation(benchmark::State& state) {
   fcpp::Allocator* callocator = new fcpp::CAllocator();
-  callocator->Init();
 
   for (auto _ : state) {
     const size_t size = static_cast<size_t>(state.range(0));
     const size_t alignment = static_cast<size_t>(state.range(1));
 
-    void* p = callocator->Allocate(size, alignment);
-    callocator->Free(p);
+    void* p = callocator->alloc(size, alignment);
+    callocator->dealloc(p);
   }
 
   delete callocator;
