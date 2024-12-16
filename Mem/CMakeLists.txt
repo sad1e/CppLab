@@ -14,6 +14,9 @@ set(MEM_SOURCES
     linear_allocator.cpp
     linear_allocator.h
 
+    stl_simple_allocator.h
+    stl_allocator_adapter.h
+
     membase.h
     membase.cpp
 )

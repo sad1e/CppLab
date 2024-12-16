@@ -13,7 +13,6 @@ namespace fcpp {
  */
 class LinearAllocator : public Allocator {
  protected:
-  void* start_ptr_;
   std::size_t prev_offset_;
   std::size_t offset_;
 

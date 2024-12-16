@@ -1,11 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 
 #include "callocator.h"
 #include "io.h"
 #include "mem_common.h"
 #include "linear_allocator.h"
+#include "stl_simple_allocator.h"
 
 using namespace fcpp;
 
@@ -27,11 +29,7 @@ void test_addr() {
   delete p;
 }
 
-int main(int argc, char** argv) {
-  size_t total_size = 1024;
-
-  LinearAllocator linear_allocator(total_size);
-
+void test_linear_allocator(LinearAllocator& linear_allocator) {
   int* int_array = static_cast<int*>(
       linear_allocator.alloc(sizeof(int) * 10u, DEFAULT_ALIGNMENT));
 
@@ -53,6 +51,28 @@ int main(int argc, char** argv) {
     *double_scalar = 3.141592653;
     std::cout << "allocated double: " << *double_scalar << io::endl;
   }
+}
+
+
+struct TestStruct {};
+
+int main(int argc, char** argv) {
+  size_t total_size = 1024;
+
+  // LinearAllocator linear_allocator(total_size);
+  // SimpleAllocatorSTL<int> simple_allocator(linear_allocator);
+
+  //   std::vector<int, SimpleAllocatorSTL<int>> int_vec(linear_allocator);
+  //   for (int i = 0; i < 10; ++i) {
+  //     int_vec.push_back(i * 10);
+  //   }
+
+  //   for (const auto& v : int_vec) {
+  //     std::cout << v << ", ";
+  //   }
+  //   std::cout << io::endl;
+
+  std::cout << alignof(TestStruct) << io::endl;
 
   return 0;
 }
