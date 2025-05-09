@@ -13,4 +13,6 @@ project(CppLearner VERSION 0.0.1
 
 find_package(benchmark CONFIG REQUIRED)
 
-add_subdirectory(Mem)
+# add_subdirectory(Mem)
+add_subdirectory(Test)
+add_subdirectory(Template)

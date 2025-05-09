@@ -53,7 +53,6 @@ void test_linear_allocator(LinearAllocator& linear_allocator) {
   }
 }
 
-
 struct TestStruct {};
 
 int main(int argc, char** argv) {
@@ -73,6 +72,15 @@ int main(int argc, char** argv) {
   //   std::cout << io::endl;
 
   std::cout << alignof(TestStruct) << io::endl;
+
+  std::cout << "sizeof(size_t): " << sizeof(std::size_t) << io::endl;
+  std::cout << "sizeof(ull):    " << sizeof(unsigned long long) << io::endl;
+
+#ifdef __cpp_char8_t
+  std::cout << "__cpp_char8_t\n";
+#else
+  std::cout << "no __cpp_char8_t\n";
+#endif
 
   return 0;
 }
